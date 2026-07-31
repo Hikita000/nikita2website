@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="uk" class="dark" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HNKNTA2 Hub | Tech & Hardware Ecosystem</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace']
+                    },
+                    colors: {
+                        brand: {
+                            50: '#ecfeff',
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                            900: '#164e63',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(239, 68, 68, 0.3); border-color: rgba(239, 68, 68, 0.6); }
+            50% { box-shadow: 0 0 30px rgba(239, 68, 68, 0.7); border-color: rgba(239, 68, 68, 0.9); }
+        }
+
+        .gpu-warning-card {
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+
+        /* iOS Translucent Glass Effects */
+        .glass-pill {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(24px) saturate(190%);
+            -webkit-backdrop-filter: blur(24px) saturate(190%);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        .dark .glass-pill {
+            background: rgba(18, 18, 22, 0.65);
+            backdrop-filter: blur(24px) saturate(190%);
+            -webkit-backdrop-filter: blur(24px) saturate(190%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        /* Mobile Sliding Glass Indicator */
+        .mobile-indicator {
+            background: rgba(6, 182, 212, 0.18);
+            backdrop-filter: blur(16px) saturate(200%);
+            -webkit-backdrop-filter: blur(16px) saturate(200%);
+            border: 1px solid rgba(34, 211, 238, 0.35);
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.2);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Desktop Sliding Glass Indicator */
+        .desktop-indicator {
+            background: rgba(228, 228, 231, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .dark .desktop-indicator {
+            background: rgba(39, 39, 42, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        /* Active Tab Text Accent */
+        .nav-btn-active {
+            color: #06b6d4 !important;
+            font-weight: 700;
+        }
+        .dark .nav-btn-active {
+            color: #22d3ee !important;
+            font-weight: 700;
+        }
+
+        /* Post Content Formatting Styles */
+        .article-content h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #06b6d4;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .dark .article-content h4 {
+            color: #22d3ee;
+        }
+        .article-content p {
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+        .article-content ul, .article-content ol {
+            margin-left: 1.25rem;
+            margin-bottom: 1rem;
+            list-style-type: disc;
+        }
+        .article-content ol {
+            list-style-type: decimal;
+        }
+        .article-content li {
+            margin-bottom: 0.35rem;
+            line-height: 1.5;
+        }
+        .article-content pre {
+            background-color: #0f172a;
+            color: #38bdf8;
+            padding: 0.85rem 1rem;
+            border-radius: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            overflow-x: auto;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+        .article-content code {
+            background-color: rgba(6, 182, 212, 0.12);
+            color: #0891b2;
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.375rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+        .dark .article-content code {
+            color: #67e8f9;
+            background-color: rgba(6, 182, 212, 0.2);
+        }
+        .article-warning-box {
+            background-color: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid #ef4444;
+            padding: 0.85rem 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            font-size: 0.825rem;
+        }
+
+        /* Scrollbars */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #52525b; }
+        .light ::-webkit-scrollbar-thumb { background: #d4d4d8; }
+        .light ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+    </style>
+
+    <!-- Theme Initialization Script -->
+    <script>
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'light') {
+            document.documentElement.classList.remove('dark');
+        } else {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</head>
+<body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 transition-colors duration-300 selection:bg-cyan-500/30 flex flex-col min-h-screen justify-between">
+
+    <header class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 px-4 pointer-events-none">
+        <nav id="navbar" class="pointer-events-auto transition-all duration-500 ease-out flex items-center justify-between rounded-full glass-pill py-3 px-5 w-full max-w-5xl">
+            
+            <!-- Logo & Brand -->
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="switchTab('about'); window.scrollTo({top: 0, behavior: 'smooth'});">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+                    <i data-lucide="terminal" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <span id="brand-name" class="font-black tracking-tight text-zinc-900 dark:text-white transition-all duration-300 text-base">HNKNTA2</span>
+                    <span class="hidden sm:inline-block ml-2 text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 font-semibold">HUB</span>
+                </div>
+            </div>
+
+            <!-- Desktop Links Container with Sliding Indicator -->
+            <div class="hidden md:flex relative items-center gap-1 text-xs font-semibold p-1 rounded-full">
+                <!-- Smooth Indicator -->
+                <div id="desktop-nav-indicator" class="desktop-indicator absolute rounded-full pointer-events-none opacity-0"></div>
+
+                <button onclick="switchTab('about')" id="nav-about" class="tab-nav-btn relative z-10 px-4 py-2 rounded-full transition-colors text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white flex items-center gap-1.5">
+                    <i data-lucide="user" class="w-3.5 h-3.5"></i>
+                    <span data-i18n="nav.about">Про мене</span>
+                </button>
+                <button onclick="switchTab('setup')" id="nav-setup" class="tab-nav-btn relative z-10 px-4 py-2 rounded-full transition-colors text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white flex items-center gap-1.5">
+                    <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+                    <span data-i18n="nav.setup">Залізо & ОС</span>
+                </button>
+                <button onclick="switchTab('guides')" id="nav-guides" class="tab-nav-btn relative z-10 px-4 py-2 rounded-full transition-colors text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white flex items-center gap-1.5">
+                    <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                    <span data-i18n="nav.guides">Пости та Гайди</span>
+                </button>
+            </div>
+
+            <!-- Controls (Locale, Theme, Telegram) -->
+            <div class="flex items-center gap-2">
+                <!-- Locale Toggle Button -->
+                <button onclick="toggleLocale()" class="h-9 px-3 rounded-full bg-white/40 dark:bg-zinc-800/40 hover:bg-white/60 dark:hover:bg-zinc-800/80 transition-colors flex items-center gap-1.5 border border-white/50 dark:border-zinc-700/50 text-zinc-700 dark:text-zinc-300 shadow-sm" aria-label="Toggle Language">
+                    <i data-lucide="languages" class="w-3.5 h-3.5 text-cyan-500"></i>
+                    <span id="locale-label" class="text-xs font-bold font-mono tracking-wider">UK</span>
+                </button>
+
+                <!-- Theme Toggle Button -->
+                <button onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-white/40 dark:bg-zinc-800/40 hover:bg-white/60 dark:hover:bg-zinc-800/80 transition-colors flex items-center justify-center border border-white/50 dark:border-zinc-700/50 relative overflow-hidden shadow-sm" aria-label="Toggle Theme">
+                    <i data-lucide="sun" class="absolute w-4 h-4 text-amber-500 transition-transform duration-500 scale-0 rotate-90 dark:scale-100 dark:rotate-0"></i>
+                    <i data-lucide="moon" class="absolute w-4 h-4 text-cyan-400 transition-transform duration-500 scale-100 rotate-0 dark:scale-0 dark:-rotate-90"></i>
+                </button>
+
+                <!-- Telegram Button -->
+                <a href="https://t.me/HIKITA2TGK" target="_blank" class="hidden sm:flex items-center gap-1.5 h-9 px-3.5 rounded-full bg-cyan-500 hover:bg-cyan-400 text-zinc-950 font-bold text-xs transition-transform hover:scale-105 shadow-md shadow-cyan-500/20">
+                    <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                    <span data-i18n="nav.tg">ТГ Канал</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <div id="mobile-nav-container" class="fixed bottom-4 left-4 right-4 z-40 md:hidden flex items-center justify-around glass-pill rounded-3xl p-2.5">
+        <!-- Sliding Indicator -->
+        <div id="mobile-nav-indicator" class="mobile-indicator absolute rounded-2xl pointer-events-none opacity-0"></div>
+
+        <button id="mobile-nav-about" onclick="switchTab('about')" class="mobile-nav-btn relative z-10 flex flex-col items-center justify-center gap-1 text-[10px] font-semibold px-6 py-2 rounded-2xl transition-colors text-zinc-500 dark:text-zinc-400">
+            <i data-lucide="user" class="w-4 h-4"></i>
+            <span data-i18n="nav.about">Інфо</span>
+        </button>
+        <button id="mobile-nav-setup" onclick="switchTab('setup')" class="mobile-nav-btn relative z-10 flex flex-col items-center justify-center gap-1 text-[10px] font-semibold px-6 py-2 rounded-2xl transition-colors text-zinc-500 dark:text-zinc-400">
+            <i data-lucide="cpu" class="w-4 h-4"></i>
+            <span data-i18n="nav.setup">Залізо</span>
+        </button>
+        <button id="mobile-nav-guides" onclick="switchTab('guides')" class="mobile-nav-btn relative z-10 flex flex-col items-center justify-center gap-1 text-[10px] font-semibold px-6 py-2 rounded-2xl transition-colors text-zinc-500 dark:text-zinc-400">
+            <i data-lucide="book-open" class="w-4 h-4"></i>
+            <span data-i18n="nav.guides">Пости</span>
+        </button>
+    </div>
+
+    <main class="flex-grow pt-24 pb-12">
+        <section class="relative py-12 px-4 overflow-hidden border-b border-zinc-200 dark:border-zinc-800/60">
+            <div class="absolute inset-0 z-0 pointer-events-none flex items-center justify-center overflow-hidden">
+                <div class="absolute inset-0 bg-[radial-gradient(#a1a1aa_1px,transparent_1px)] dark:bg-[radial-gradient(#27272a_1px,transparent_1px)] opacity-20 [background-size:20px_20px]"></div>
+                <div class="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-cyan-500/10 dark:bg-cyan-500/15 rounded-full blur-[120px]"></div>
+                <div class="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-purple-500/10 dark:bg-purple-500/15 rounded-full blur-[120px]"></div>
+            </div>
+
+            <div class="max-w-4xl mx-auto text-center relative z-10">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 text-cyan-600 dark:text-cyan-400 text-xs font-mono mb-6 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-cyan-500 animate-ping"></span>
+                    <span data-i18n="hero.badge">HARDWARE & TWEAKING EXPERT</span>
+                </div>
+
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-zinc-900 dark:text-white mb-4 leading-tight" data-i18n="hero.title">
+                    Персональний Портал & База Знань
+                </h1>
+
+                <p class="text-zinc-600 dark:text-zinc-400 text-xs sm:text-base max-w-2xl mx-auto mb-8 leading-relaxed" data-i18n="hero.subtitle">
+                    Особистий хаб HNKNTA2. Повні розгорнуті гайди з точного налаштування Windows, залоканого BIOS на Sony Vaio, Dual-Boot, відновлення BCD та глибокої оптимізації.
+                </p>
+
+                <!-- Search Input Bar -->
+                <div class="max-w-md mx-auto relative group">
+                    <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-zinc-400">
+                        <i data-lucide="search" class="w-4 h-4"></i>
+                    </div>
+                    <input type="text" id="searchInput" oninput="filterPosts()" placeholder="Пошук по гайдах..." 
+                        class="w-full bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 rounded-full py-3 pl-11 pr-4 text-xs sm:text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:border-cyan-500 dark:focus:border-cyan-500 transition shadow-sm group-hover:border-zinc-400 dark:group-hover:border-zinc-700">
+                </div>
+            </div>
+        </section>
+
+        <div class="max-w-6xl mx-auto px-4 pt-10">
+
+            <!-- TAB 1: ABOUT ME -->
+            <div id="tab-about" class="tab-content space-y-8">
+                <div class="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-zinc-900 dark:text-white flex items-center gap-2" data-i18n="about.heading">
+                            <i data-lucide="user" class="w-5 h-5 text-cyan-500"></i> Про мене та мої проекти
+                        </h2>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1" data-i18n="about.sub">Усе про мій шлях, підходи до техніки, досвід та захоплення</p>
+                    </div>
+                </div>
+
+                <!-- Main Profile Card -->
+                <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm relative overflow-hidden">
+                    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center font-black text-2xl text-white shadow-xl shadow-cyan-500/20">
+                                HN
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h3 class="text-xl font-extrabold text-zinc-900 dark:text-white">HNKNTA2</h3>
+                                    <span class="bg-cyan-500/10 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 text-[10px] font-bold px-2.5 py-0.5 rounded-full" data-i18n="about.badge">Tech Enthusiast</span>
+                                </div>
+                                <p class="text-xs text-cyan-600 dark:text-cyan-400 font-mono mt-0.5" data-i18n="about.role">System Tweaker & Hardware Lab</p>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2 text-xs">
+                            <span class="bg-zinc-100 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 px-3 py-1.5 rounded-xl flex items-center gap-1.5">
+                                <i data-lucide="laptop" class="w-3.5 h-3.5 text-indigo-500"></i> Sony Vaio Lab
+                            </span>
+                            <span class="bg-zinc-100 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 px-3 py-1.5 rounded-xl flex items-center gap-1.5">
+                                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-500"></i> <span data-i18n="about.standaloneBadge">Незалежний ресурс</span>
+                            </span>
+                            <a href="https://t.me/HIKITA2TGK" target="_blank" class="bg-zinc-100 dark:bg-zinc-950 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-colors">
+                                <i data-lucide="send" class="w-3.5 h-3.5 text-sky-500"></i> @HIKITA2TGK
+                            </a>
+                            <a href="https://t.me/NIKITA2TGK" target="_blank" class="bg-zinc-100 dark:bg-zinc-950 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-colors">
+                                <i data-lucide="users" class="w-3.5 h-3.5 text-purple-500"></i> @NIKITA2TGK
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-zinc-100 dark:border-zinc-800/80 grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-zinc-50 dark:bg-zinc-950/60 p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/60">
+                            <h4 class="font-bold text-xs text-cyan-600 dark:text-cyan-400 mb-2 flex items-center gap-2">
+                                <i data-lucide="sliders" class="w-4 h-4"></i> <span data-i18n="about.card1Title">Твікінг та Оптимізація</span>
+                            </h4>
+                            <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed" data-i18n="about.card1Desc">
+                                Обожнюю зазирати під капот операційних систем: вирізаю непотрібні служби, налаштовую реєстр, прибираю затримки мережі та очищаю автозавантаження до ідеалу.
+                            </p>
+                        </div>
+                        <div class="bg-zinc-50 dark:bg-zinc-950/60 p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/60">
+                            <h4 class="font-bold text-xs text-amber-600 dark:text-amber-400 mb-2 flex items-center gap-2">
+                                <i data-lucide="cpu" class="w-4 h-4"></i> <span data-i18n="about.card2Title">Лабораторія Sony Vaio</span>
+                            </h4>
+                            <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed" data-i18n="about.card2Desc">
+                                Моя головна тестова площадка — ноутбук Sony Vaio. Борюся із залоканим InsydeH2O BIOS, контролюю відеокарту з тріщиною та експериментую з охолодженням.
+                            </p>
+                        </div>
+                        <div class="bg-zinc-50 dark:bg-zinc-950/60 p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/60">
+                            <h4 class="font-bold text-xs text-purple-600 dark:text-purple-400 mb-2 flex items-center gap-2">
+                                <i data-lucide="gamepad-2" class="w-4 h-4"></i> <span data-i18n="about.card3Title">Ґеймінг на слабкому залізі</span>
+                            </h4>
+                            <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed" data-i18n="about.card3Desc">
+                                Доводжу, що грати можна навіть на обмежених системах. Збираю легкі кастоми Minecraft (Fabric/Sodium) та твікаю клієнти Roblox.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Telegram Info Card -->
+                <div class="p-6 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                    <div class="space-y-2 max-w-2xl">
+                        <h4 class="font-bold text-base text-zinc-900 dark:text-white flex items-center gap-2">
+                            <i data-lucide="message-square" class="w-5 h-5 text-sky-500"></i> <span data-i18n="about.tgTitle">Спілкування, Канал та Група</span>
+                        </h4>
+                        <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed" data-i18n="about.tgDesc">
+                            Ділюся готовими конфігами, результатами тестів, оглядами софту та деталізованими гайдами у своєму Telegram-каналі @HIKITA2TGK. Також приєднуйтесь до чату @NIKITA2TGK для обговорень!
+                        </p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-2 shrink-0 w-full sm:w-auto">
+                        <a href="https://t.me/HIKITA2TGK" target="_blank" class="px-5 py-3 rounded-2xl bg-sky-500 hover:bg-sky-400 text-zinc-950 font-bold text-xs transition-transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                            <span data-i18n="about.tgBtn">ТГ Канал</span>
+                        </a>
+                        <a href="https://t.me/NIKITA2TGK" target="_blank" class="px-5 py-3 rounded-2xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs transition-transform hover:scale-105 shadow-lg flex items-center justify-center gap-2">
+                            <i data-lucide="users" class="w-4 h-4"></i>
+                            <span data-i18n="about.tgGroupBtn">ТГ Група</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: HARDWARE & OS -->
+            <div id="tab-setup" class="tab-content hidden space-y-8">
+                <div class="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-zinc-900 dark:text-white flex items-center gap-2" data-i18n="setup.heading">
+                            <i data-lucide="cpu" class="w-5 h-5 text-indigo-500"></i> Специфікація Sony Vaio VPCEB3S1R
+                        </h2>
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1" data-i18n="setup.sub">Повна конфігурація, статус чіпа та особливості архітектури</p>
+                    </div>
+                </div>
+
+                <!-- Laptop Banner -->
+                <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm relative overflow-hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-zinc-200 dark:border-zinc-800">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 rounded-2xl flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                                <i data-lucide="laptop" class="w-7 h-7"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h3 class="text-xl font-black text-zinc-900 dark:text-white">Sony Vaio VPCEB3S1R / B</h3>
+                                    <span class="bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/30 text-[10px] font-mono px-2.5 py-0.5 rounded-full" data-i18n="setup.badge">Legacy Testbed</span>
+                                </div>
+                                <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5" data-i18n="setup.laptopDesc">Лабораторна станція HNKNTA2 під екстремальні умови</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:items-end gap-1">
+                            <span class="px-3 py-1 rounded-full bg-red-500/10 border border-red-500/40 text-red-600 dark:text-red-400 text-xs font-mono font-bold flex items-center gap-1.5 w-fit">
+                                <i data-lucide="alert-triangle" class="w-3.5 h-3.5 animate-pulse"></i> <span data-i18n="setup.warningBadge">Тріщина на GPU (88% Ризик)</span>
+                            </span>
+                            <span class="text-[10px] text-zinc-400 font-mono">InsydeH2O BIOS: Locked</span>
+                        </div>
+                    </div>
+
+                    <!-- GPU Fractured Risk Gauge Card -->
+                    <div class="gpu-warning-card p-5 rounded-2xl bg-red-50 dark:bg-red-950/30 border border-red-300 dark:border-red-800/80 space-y-4">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-xl bg-red-500/20 text-red-600 dark:text-red-400 flex items-center justify-center font-bold">
+                                    <i data-lucide="flame" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-xs sm:text-sm text-red-600 dark:text-red-400 tracking-wide" data-i18n="setup.gpuCritTitle">КРИТИЧНИЙ СТАТУС ВІДЕОЧІПА</h4>
+                                    <p class="text-[11px] text-zinc-600 dark:text-zinc-400" data-i18n="setup.gpuCritDesc">Фізична тріщина кристала ATI Mobility Radeon HD 5650</p>
+                                </div>
+                            </div>
+                            <div class="text-left sm:text-right">
+                                <span class="text-2xl font-black text-red-600 dark:text-red-400 font-mono">88%</span>
+                                <span class="text-[10px] text-red-500 dark:text-red-400 block font-mono uppercase" data-i18n="setup.gpuRiskText">Ймовірність відвалу</span>
+                            </div>
+                        </div>
+
+                        <!-- Animated Percentage Bar -->
+                        <div class="space-y-1">
+                            <div class="w-full bg-zinc-200 dark:bg-zinc-950 rounded-full h-3.5 p-0.5 border border-red-300 dark:border-red-900/60 overflow-hidden">
+                                <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-red-600 h-full rounded-full w-[88%] shadow-md"></div>
+                            </div>
+                            <div class="flex justify-between text-[10px] font-mono text-zinc-500 dark:text-zinc-400 pt-0.5">
+                                <span data-i18n="setup.safe">0% Безпечно</span>
+                                <span data-i18n="setup.warn">50% Увага</span>
+                                <span class="text-red-600 dark:text-red-400 font-bold" data-i18n="setup.danger">88% Небезпека</span>
+                                <span data-i18n="setup.dead">100% Відвал</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hardware Spec Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+                        
+                        <!-- CPU -->
+                        <div class="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400">CPU</span>
+                                <i data-lucide="cpu" class="w-4 h-4 text-cyan-500"></i>
+                            </div>
+                            <h4 class="text-sm font-extrabold text-zinc-900 dark:text-white">Intel Core i5-460M</h4>
+                            <p class="text-[11px] text-zinc-600 dark:text-zinc-400 leading-relaxed">2 ядра / 4 потоки (2.53 GHz, Turbo Boost до 2.80 GHz). Архітектура Nehalem.</p>
+                            <div class="pt-2 border-t border-zinc-200 dark:border-zinc-800/80 flex justify-between text-[10px] text-zinc-500 font-mono">
+                                <span>TDP: 35W</span>
+                                <span>Socket: PGA988</span>
+                            </div>
+                        </div>
+
+                        <!-- GPU -->
+                        <div class="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-950/60 border border-red-200 dark:border-red-900/40 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-red-600 dark:text-red-400">GPU</span>
+                                <i data-lucide="monitor" class="w-4 h-4 text-red-500"></i>
+                            </div>
+                            <h4 class="text-sm font-extrabold text-zinc-900 dark:text-white">ATI Radeon HD 5650</h4>
+                            <p class="text-[11px] text-zinc-600 dark:text-zinc-400 leading-relaxed">1 GB VRAM DDR3. Знижено частоти ядра для даунклокінгу.</p>
+                            <div class="pt-2 border-t border-zinc-200 dark:border-zinc-800/80 flex justify-between text-[10px] text-zinc-500 font-mono">
+                                <span>DirectX: 11.0</span>
+                                <span class="text-red-500 font-bold">Status: Cracked</span>
+                            </div>
+                        </div>
+
+                        <!-- RAM -->
+                        <div class="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400">RAM</span>
+                                <i data-lucide="memory-stick" class="w-4 h-4 text-purple-500"></i>
+                            </div>
+                            <h4 class="text-sm font-extrabold text-zinc-900 dark:text-white">4 GB DDR3 RAM</h4>
+                            <p class="text-[11px] text-zinc-600 dark:text-zinc-400 leading-relaxed">Частота 1066 MHz. Оптимізовано під файл підкачки та мінімальний забір VRAM.</p>
+                            <div class="pt-2 border-t border-zinc-200 dark:border-zinc-800/80 flex justify-between text-[10px] text-zinc-500 font-mono">
+                                <span>Channels: Dual</span>
+                                <span>Speed: 1066 MT/s</span>
+                            </div>
+                        </div>
+
+                        <!-- OS -->
+                        <div class="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Dual-Boot OS</span>
+                                <i data-lucide="hard-drive" class="w-4 h-4 text-emerald-500"></i>
+                            </div>
+                            <h4 class="text-sm font-extrabold text-zinc-900 dark:text-white">Win 10 + Win 7</h4>
+                            <p class="text-[11px] text-zinc-600 dark:text-zinc-400 leading-relaxed">Windows 10 для софту + Windows 7 для роботи без навантаження на GPU.</p>
+                            <div class="pt-2 border-t border-zinc-200 dark:border-zinc-800/80 flex justify-between text-[10px] text-zinc-500 font-mono">
+                                <span>Bootloader: BCD</span>
+                                <span>Type: MBR</span>
+                            </div>
+                        </div>
+
+                        <!-- BIOS -->
+                        <div class="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">BIOS</span>
+                                <i data-lucide="lock" class="w-4 h-4 text-amber-500"></i>
+                            </div>
+                            <h4 class="text-sm font-extrabold text-zinc-900 dark:text-white">InsydeH2O (Locked)</h4>
+                            <p class="text-[11px] text-zinc-600 dark:text-zinc-400 leading-relaxed">Вольтаж MSR заблоковано на рівні Sony. Застосовується програмне скидання таймаутів.</p>
+                            <div class="pt-2 border-t border-zinc-200 dark:border-zinc-800/80 flex justify-between text-[10px] text-zinc-500 font-mono">
+                                <span>Undervolt: Soft</span>
+                                <span>Turbo: 99% Limit</span>
+                            </div>
+                        </div>
+
+                        <!-- Display -->
+                        <div class="p-4 rounded-2xl bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">Display</span>
+                                <i data-lucide="tv" class="w-4 h-4 text-sky-500"></i>
+                            </div>
+                            <h4 class="text-sm font-extrabold text-zinc-900 dark:text-white">15.5" VAIO Display</h4>
+                            <p class="text-[11px] text-zinc-600 dark:text-zinc-400 leading-relaxed">Роздільна здатність HD (1366x768). Глянцева матриця зі стандартним співвідношенням 16:9.</p>
+                            <div class="pt-2 border-t border-zinc-200 dark:border-zinc-800/80 flex justify-between text-[10px] text-zinc-500 font-mono">
+                                <span>Ratio: 16:9</span>
+                                <span>Refresh: 60Hz</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: GUIDES & POSTS -->
+            <div id="tab-guides" class="tab-content hidden space-y-6">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-zinc-900 dark:text-white flex items-center gap-2" data-i18n="guides.heading">
+                            <i data-lucide="book-open" class="w-5 h-5 text-cyan-500"></i> База гайдів та статей
+                        </h2>
+                    </div>
+                    <span class="text-xs font-mono font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 border border-cyan-500/30 px-3 py-1 rounded-full" id="guides-count">Постів: 0</span>
+                </div>
+
+                <!-- Tag Filters -->
+                <div class="flex flex-wrap gap-2 text-xs" id="tag-filters">
+                    <button onclick="filterByTag('all', this)" class="tag-btn bg-cyan-500 text-zinc-950 px-3.5 py-1.5 rounded-full font-bold shadow-sm">Все</button>
+                    <button onclick="filterByTag('Windows', this)" class="tag-btn bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full border border-zinc-200 dark:border-zinc-800">Windows</button>
+                    <button onclick="filterByTag('Hardware', this)" class="tag-btn bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full border border-zinc-200 dark:border-zinc-800">Hardware</button>
+                    <button onclick="filterByTag('Sony', this)" class="tag-btn bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full border border-zinc-200 dark:border-zinc-800">Sony Vaio</button>
+                    <button onclick="filterByTag('Dual-Boot', this)" class="tag-btn bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full border border-zinc-200 dark:border-zinc-800">Dual-Boot</button>
+                    <button onclick="filterByTag('Minecraft', this)" class="tag-btn bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full border border-zinc-200 dark:border-zinc-800">Minecraft</button>
+                    <button onclick="filterByTag('Roblox', this)" class="tag-btn bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full border border-zinc-200 dark:border-zinc-800">Roblox</button>
+                </div>
+
+                <!-- Guides Dynamic Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="guides-grid">
+                    <!-- Cards will be populated dynamically via JavaScript -->
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-white/80 dark:bg-zinc-950/80 border-t border-zinc-200 dark:border-zinc-800/80 pt-8 pb-28 md:pb-8 text-xs text-zinc-500 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-lg bg-cyan-500 flex items-center justify-center text-zinc-950 font-bold">
+                    <i data-lucide="terminal" class="w-3.5 h-3.5"></i>
+                </div>
+                <span>© <span id="current-year"></span> HNKNTA2 | Independent Tech & Hardware Hub</span>
+            </div>
+            <div class="flex items-center gap-4 text-cyan-600 dark:text-cyan-400 font-mono">
+                <a href="https://t.me/HIKITA2TGK" target="_blank" class="hover:underline flex items-center gap-1.5">
+                    <i data-lucide="send" class="w-3.5 h-3.5"></i> @HIKITA2TGK
+                </a>
+                <a href="https://t.me/NIKITA2TGK" target="_blank" class="hover:underline text-purple-500 flex items-center gap-1.5">
+                    <i data-lucide="users" class="w-3.5 h-3.5"></i> @NIKITA2TGK
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="postModal" onclick="closeModalOnBg(event)" class="fixed inset-0 bg-zinc-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-6">
+        <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 w-full max-w-2xl rounded-3xl p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto shadow-2xl space-y-4">
+            <button onclick="closeModal()" class="sticky top-0 float-right text-zinc-400 hover:text-zinc-900 dark:hover:text-white text-lg w-9 h-9 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center transition-colors z-20 shadow-md">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+            <div id="modalContent" class="article-content"></div>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            uk: {
+                "nav.about": "Про мене",
+                "nav.setup": "Залізо & ОС",
+                "nav.guides": "Пости",
+                "nav.tg": "ТГ Канал",
+
+                "hero.badge": "HARDWARE & TWEAKING EXPERT",
+                "hero.title": "Персональний Портал & База Знань",
+                "hero.subtitle": "Особистий хаб HNKNTA2. Збірка повноцінних гайдів з точного налаштування Windows, залоканого BIOS на Sony Vaio, Dual-Boot та глибокої оптимізації.",
+                "hero.searchPlaceholder": "Пошук по гайдах...",
+
+                "about.heading": "Про мене та мої проекти",
+                "about.sub": "Усе про мій шлях, підходи до техніки, досвід та захоплення",
+                "about.badge": "Tech Enthusiast",
+                "about.role": "System Tweaker & Hardware Lab",
+                "about.standaloneBadge": "Незалежний ресурс",
+                "about.card1Title": "Твікінг та Оптимізація",
+                "about.card1Desc": "Обожнюю зазирати під капот операційних систем: вирізаю непотрібні служби, налаштовую реєстр, прибираю затримки мережі та очищаю автозавантаження до ідеалу.",
+                "about.card2Title": "Лабораторія Sony Vaio",
+                "about.card2Desc": "Моя головна тестова площадка — ноутбук Sony Vaio. Борюся із залоканим InsydeH2O BIOS, контролюю відеокарту з тріщиною та експериментую з охолодженням.",
+                "about.card3Title": "Ґеймінг на слабкому залізі",
+                "about.card3Desc": "Доводжу, що грати можна навіть на обмежених системах. Збираю легкі кастоми Minecraft (Fabric/Sodium) та твікаю клієнти Roblox.",
+                "about.tgTitle": "Спілкування, Канал та Група",
+                "about.tgDesc": "Ділюся готовими конфігами, результатами тестів, оглядами софту та гайдами у своєму Telegram-каналі @HIKITA2TGK. Там викладаю все найкорисніше! Також приєднуйтесь до нашої групи @NIKITA2TGK для обговорень.",
+                "about.tgBtn": "ТГ Канал",
+                "about.tgGroupBtn": "ТГ Група",
+
+                "setup.heading": "Специфікація Sony Vaio VPCEB3S1R",
+                "setup.sub": "Повна конфігурація, статус чіпа та особливості архітектури",
+                "setup.badge": "Legacy Testbed",
+                "setup.laptopDesc": "Лабораторна станція HNKNTA2 під екстремальні умови",
+                "setup.warningBadge": "Тріщина на GPU (88% Ризик)",
+                "setup.gpuCritTitle": "КРИТИЧНИЙ СТАТУС ВІДЕОЧІПА",
+                "setup.gpuCritDesc": "Фізична тріщина кристала ATI Mobility Radeon HD 5650",
+                "setup.gpuRiskText": "Ймовірність відвалу",
+                "setup.safe": "0% Безпечно",
+                "setup.warn": "50% Увага",
+                "setup.danger": "88% Небезпека",
+                "setup.dead": "100% Відвал",
+
+                "guides.heading": "База гайдів та статей",
+                "guides.readMore": "Читати повністю",
+                "guides.countPrefix": "Постів: "
+            },
+            en: {
+                "nav.about": "About Me",
+                "nav.setup": "Hardware & OS",
+                "nav.guides": "Posts",
+                "nav.tg": "TG Channel",
+
+                "hero.badge": "HARDWARE & TWEAKING EXPERT",
+                "hero.title": "Personal Hub & Knowledge Base",
+                "hero.subtitle": "Personal hub of HNKNTA2. A collection of full-fledged guides for fine-tuning Windows, bypassing locked Sony Vaio BIOS, Dual-Boot setups, and deep system optimization.",
+                "hero.searchPlaceholder": "Search guides...",
+
+                "about.heading": "About Me & Projects",
+                "about.sub": "All about my path, tech approaches, experience and engineering passions",
+                "about.badge": "Tech Enthusiast",
+                "about.role": "System Tweaker & Hardware Lab",
+                "about.standaloneBadge": "Standalone Project",
+                "about.card1Title": "Tweaking & Optimization",
+                "about.card1Desc": "I love looking under the hood of operating systems: removing bloatware services, tuning registry key values, eliminating network latency, and cleaning startup to perfection.",
+                "about.card2Title": "Sony Vaio Testbed Lab",
+                "about.card2Desc": "My primary testing station — a Sony Vaio laptop. Battling locked InsydeH2O BIOS, managing a fractured GPU chip, and tweaking custom cooling solutions.",
+                "about.card3Title": "Low-End Hardware Gaming",
+                "about.card3Desc": "Proving you can game even on restricted hardware. Building lightweight custom Minecraft instances (Fabric/Sodium) and optimizing Roblox client performance.",
+                "about.tgTitle": "Community, Channel & Group",
+                "about.tgDesc": "Sharing ready-made configs, benchmark results, software reviews, and guides on my Telegram channel @HIKITA2TGK. Also join our chat group @NIKITA2TGK for discussions!",
+                "about.tgBtn": "TG Channel",
+                "about.tgGroupBtn": "TG Group",
+
+                "setup.heading": "Sony Vaio VPCEB3S1R Specification",
+                "setup.sub": "Complete system specs, GPU die health status, and system architecture",
+                "setup.badge": "Legacy Testbed",
+                "setup.laptopDesc": "HNKNTA2 lab station tuned for extreme work conditions",
+                "setup.warningBadge": "GPU Die Fracture (88% Risk)",
+                "setup.gpuCritTitle": "CRITICAL GPU DIE STATUS",
+                "setup.gpuCritDesc": "Physical silicon die crack on ATI Mobility Radeon HD 5650",
+                "setup.gpuRiskText": "Failure Probability",
+                "setup.safe": "0% Safe",
+                "setup.warn": "50% Warning",
+                "setup.danger": "88% Danger",
+                "setup.dead": "100% Failure",
+
+                "guides.heading": "Guides & Knowledge Database",
+                "guides.readMore": "Read Full Article",
+                "guides.countPrefix": "Posts: "
+            }
+        };
+
+        const fullDetailedArticles = [
+            { 
+                id: "p1", 
+                tag: "Dual-Boot", 
+                t_uk: "Установлення та налаштування Dual-Boot: Windows 7 + Windows 10", 
+                t_en: "Setting up Dual-Boot: Windows 7 and Windows 10 Dual-Boot Guide", 
+                d_uk: "Повний гайд із правильної розмітки диска, завантажувача BCD та усунення конфліктів системних служб.", 
+                d_en: "Comprehensive guide on disk partitioning, BCD bootloader setup, and resolving system service conflicts.", 
+                content_uk: `
+                    <h4>1. Підготовка диска та розмітка</h4>
+                    <p>Для стабільної паралельної роботи Windows 7 і Windows 10 на одному накопичувачі рекомендується використовувати таблицю розділів MBR (для застарілих BIOS) або GPT (для UEFI). Розділіть диск на два основних томи:</p>
+                    <ul>
+                        <li><b>Volume C (Win 7):</b> мінімум 50 ГБ (NTFS)</li>
+                        <li><b>Volume D (Win 10):</b> мінімум 70 ГБ (NTFS)</li>
+                    </ul>
+
+                    <h4>2. Порядок інсталяції систем</h4>
+                    <p>Завжди встановлюйте спочатку старішу версію Windows (7), а потім новішу (10). Windows 10 автоматично виявить наявну Win 7, збереже її завантажувальний сектор та оновить графічне меню BCD.</p>
+
+                    <h4>3. Вимкнення Fast Startup у Windows 10</h4>
+                    <div class="article-warning-box">
+                        <b>Увага!</b> Швидкий запуск (Fast Startup) у Windows 10 переводить файлову систему в стан гібернації, що призводить до пошкодження розділів при завантаженні у Windows 7.
+                    </div>
+                    <p>Для вимкнення відкрийте командний рядок від імені адміністратора у Win 10 та виконайте:</p>
+                    <pre>powercfg /h off</pre>
+
+                    <h4>4. Налаштування пріоритету завантаження в BCD</h4>
+                    <p>Щоб змінити таймаут вибору системи або встановити ОС за замовчуванням:</p>
+                    <pre>bcdedit /timeout 5
+bcdedit /default {current}</pre>
+                `, 
+                content_en: `
+                    <h4>1. Disk Partitioning & Layout</h4>
+                    <p>For a flawless dual-boot layout with Windows 7 and Windows 10 on a single drive, allocate two distinct primary partitions:</p>
+                    <ul>
+                        <li><b>Volume C (Win 7):</b> Minimum 50 GB (NTFS)</li>
+                        <li><b>Volume D (Win 10):</b> Minimum 70 GB (NTFS)</li>
+                    </ul>
+
+                    <h4>2. Installation Sequence</h4>
+                    <p>Always install the older operating system (Windows 7) first, followed by the newer one (Windows 10). Windows 10 will auto-detect Win 7 and compile a unified BCD bootloader menu.</p>
+
+                    <h4>3. Disabling Windows 10 Fast Startup</h4>
+                    <div class="article-warning-box">
+                        <b>Warning!</b> Fast Startup leaves NTFS partitions locked in a hybrid hibernation state, causing file system corruption when booting Windows 7!
+                    </div>
+                    <p>Run the following command in PowerShell/CMD as administrator inside Win 10:</p>
+                    <pre>powercfg /h off</pre>
+
+                    <h4>4. Fine-Tuning BCD Boot Options</h4>
+                    <p>Set system boot menu timeout and default OS selection:</p>
+                    <pre>bcdedit /timeout 5
+bcdedit /default {current}</pre>
+                ` 
+            },
+            { 
+                id: "p2", 
+                tag: "Sony", 
+                t_uk: "Обхід заблокованого андервольтингу в BIOS Sony Vaio (InsydeH2O)", 
+                t_en: "Bypassing Locked CPU Undervolting on Sony Vaio (InsydeH2O)", 
+                d_uk: "Зниження температур процесора Intel Core i5-460M без прямого доступу до MSR регістрів.", 
+                d_en: "Lowering Intel Core i5-460M CPU temperatures without direct access to locked MSR registers.", 
+                content_uk: `
+                    <h4>1. Проблема прошивки InsydeH2O від Sony</h4>
+                    <p>Ноутбуки Sony Vaio мають урізаний BIOS, який блокує зміну напруги (Undervolting) та MSR регістрів <code>0x1FC</code> на рівні апаратних ключів. Спроби прямого запису в ThrottleStop викличуть BSOD або відхилення драйвера.</p>
+
+                    <h4>2. Програмне рішення обмеження Turbo Boost</h4>
+                    <p>Процесор Core i5-460M за замовчуванням піднімає частоту з 2.53 ГГц до 2.80 ГГц, викликаючи різкий стрибок напруги VCore з 1.15V до 1.32V та перегрів до 88°C.</p>
+                    <p>Щоб обмежити агресивний буст у план живлення Windows:</p>
+                    <ol>
+                        <li>Натисніть <code>Win + R</code> → введіть <code>powercfg.cpl</code></li>
+                        <li>Відкрийте <i>"Змінити додаткові параметри живлення"</i></li>
+                        <li>Перейдіть до: <code>Керування живленням процесора</code> → <code>Максимальний стан процесора</code></li>
+                        <li>Встановіть значення <b>99%</b> (замість 100%)</li>
+                    </ol>
+
+                    <h4>3. Результати тестування</h4>
+                    <ul>
+                        <li><b>До налаштування:</b> 86-89°C у навантаженні, троттлінг, шум кулера.</li>
+                        <li><b>Після (limit 99%):</b> 68-72°C у навантаженні, стабільні 2.53 GHz, повна тиша.</li>
+                    </ul>
+                `, 
+                content_en: `
+                    <h4>1. The Sony InsydeH2O Firmware Lock</h4>
+                    <p>Sony Vaio laptops ship with a heavily locked InsydeH2O BIOS that disables CPU voltage register modifications (MSR <code>0x1FC</code>). Direct register edits via ThrottleStop or XTU result in immediate BSODs.</p>
+
+                    <h4>2. Software Cap for Turbo Boost Spikes</h4>
+                    <p>The Intel Core i5-460M spikes VCore from 1.15V up to 1.32V when triggering Turbo Boost (2.80 GHz), leading to thermal spikes up to 88°C.</p>
+                    <p>To disable aggressive boosting through Windows Power Plan:</p>
+                    <ol>
+                        <li>Press <code>Win + R</code> → run <code>powercfg.cpl</code></li>
+                        <li>Navigate to <i>"Change advanced power settings"</i></li>
+                        <li>Expand: <code>Processor power management</code> → <code>Maximum processor state</code></li>
+                        <li>Set the cap value to <b>99%</b> (down from 100%)</li>
+                    </ol>
+
+                    <h4>3. Benchmark Comparison</h4>
+                    <ul>
+                        <li><b>Stock (100%):</b> 86-89°C under load, thermal throttling, aggressive fan pitch.</li>
+                        <li><b>Tuned (99%):</b> 68-72°C max temp, solid 2.53 GHz clock, quiet fan profile.</li>
+                    </ul>
+                ` 
+            },
+            { 
+                id: "p3", 
+                tag: "Hardware", 
+                t_uk: "Порятунок відеокарти з тріщиною на кристалі (Radeon HD 5650)", 
+                t_en: "Rescuing a Fractured GPU Die Chip (ATI Radeon HD 5650)", 
+                d_uk: "Аварійне зниження частот, приборкання напруги та застосування фазового переходу PTM7950.", 
+                d_en: "Emergency downclocking, voltage reduction, and PTM7950 phase-change pad installation.", 
+                content_uk: `
+                    <h4>1. Діагностика тріщини силиконового чіпа</h4>
+                    <p>Фізична тріщина кристала (Silicon Die Crack) виникає через перекіс радіатора або сильний удар. При розширенні від нагріву контактні доріжки розходяться, викликаючи артефакти або "зависання" відеокарти.</p>
+
+                    <h4>2. Аварійний андерклокінг у MSI Afterburner</h4>
+                    <p>Щоб мінімізувати температурні розширення матеріалу:</p>
+                    <ul>
+                        <li><b>Core Clock:</b> знизити з 550 МГц до 400 МГц (-150 MHz)</li>
+                        <li><b>Memory Clock:</b> знизити з 800 МГц до 650 МГц (-150 MHz)</li>
+                        <li><b>Fan Speed:</b> зафіксувати постійний обдув на рівні 70%</li>
+                    </ul>
+
+                    <h4>3. Використання фазового переходу PTM7950</h4>
+                    <p>Звичайна термопаста витікає з відкритих чіпів через 2 тижні (Pump-out effect). Використовуйте термопрокладку Honeywell PTM7950 0.25mm:</p>
+                    <ul>
+                        <li>При 45°C вона змінює фазу з твердої на рідку, заповнюючи мікротріщини.</li>
+                        <li>Не висихає та служить роками без втрати теплопровідності.</li>
+                    </ul>
+                `, 
+                content_en: `
+                    <h4>1. Silicon Crystal Crack Diagnostics</h4>
+                    <p>A physical silicon die crack occurs from uneven heatsink torque or impact drops. Thermal expansion widens the micro-fracture, tearing logic traces and causing screen artifacts or GPU resets.</p>
+
+                    <h4>2. Emergency Downclocking via MSI Afterburner</h4>
+                    <p>To reduce thermal strain and physical expansion on the die:</p>
+                    <ul>
+                        <li><b>Core Clock:</b> Lower from 550 MHz to 400 MHz (-150 MHz)</li>
+                        <li><b>Memory Clock:</b> Lower from 800 MHz to 650 MHz (-150 MHz)</li>
+                        <li><b>Fan Speed Curve:</b> Force static 70% fan profile</li>
+                    </ul>
+
+                    <h4>3. Applying Honeywell PTM7950 Phase-Change Pad</h4>
+                    <p>Standard liquid thermal paste suffers from rapid pump-out effect within weeks. Use Honeywell PTM7950 (0.25mm pad):</p>
+                    <ul>
+                        <li>At 45°C it transitions to liquid state, perfectly sealing micro-cracks.</li>
+                        <li>Never dries out and maintains peak 8.5 W/mK thermal conductivity.</li>
+                    </ul>
+                ` 
+            },
+            { 
+                id: "p4", 
+                tag: "Dual-Boot", 
+                t_uk: "Відновлення зіпсованого завантажувача BCD через командний рядок", 
+                t_en: "Repairing Corrupted BCD Bootloader via CMD Commands", 
+                d_uk: "Інструкція з вирішення помилок 'Your PC needs to be repaired' та 0xc000000e.", 
+                d_en: "Complete guide for fixing 'Your PC needs to be repaired' and 0xc000000e boot errors.", 
+                content_uk: `
+                    <h4>1. Причини збоїв BCD</h4>
+                    <p>Видалення системних розділів, збій живлення або помилки оновлень призводять до пошкодження файлів завантаження Windows (Boot Configuration Data).</p>
+
+                    <h4>2. Покроковий алгоритм відновлення</h4>
+                    <ol>
+                        <li>Завантажтеся з інсталяційного диска/флешки Windows.</li>
+                        <li>На екрані вибору мови натисніть <code>Shift + F10</code> для відкриття командного рядка.</li>
+                        <li>Послідовно виконайте команди:</li>
+                    </ol>
+                    <pre>bootrec /fixmbr
+bootrec /fixboot
+bootrec /scanos
+bootrec /rebuildbcd</pre>
+
+                    <h4>3. Ручне перестворення розділу завантаження</h4>
+                    <p>Якщо команди вище відхилено з помилкою <i>"Access is denied"</i>:</p>
+                    <pre>diskpart
+select disk 0
+list volume
+select volume X (де X - системний розділ)
+active
+exit
+bcdboot C:\Windows /l uk-ua /s C:</pre>
+                `, 
+                content_en: `
+                    <h4>1. Causes of BCD Boot Failures</h4>
+                    <p>Accidental partition deletes, sudden power loss, or failed Windows updates corrupt the Boot Configuration Data (BCD) store, resulting in error codes like <code>0xc000000e</code>.</p>
+
+                    <h4>2. Step-by-Step Recovery Procedure</h4>
+                    <ol>
+                        <li>Boot from Windows Installation USB.</li>
+                        <li>On the setup screen, press <code>Shift + F10</code> to summon CMD.</li>
+                        <li>Run the repair command sequence:</li>
+                    </ol>
+                    <pre>bootrec /fixmbr
+bootrec /fixboot
+bootrec /scanos
+bootrec /rebuildbcd</pre>
+
+                    <h4>3. Manual BCD Recreation</h4>
+                    <p>If <code>fixboot</code> fails with "Access Denied" error:</p>
+                    <pre>diskpart
+select disk 0
+list volume
+select volume X (system partition)
+active
+exit
+bcdboot C:\Windows /l en-us /s C:</pre>
+                ` 
+            },
+            { 
+                id: "p5", 
+                tag: "Sony", 
+                t_uk: "Правильне розбирання та чистка охолодження Sony Vaio VPCEB", 
+                t_en: "Proper Disassembly and Cooling Overhaul for Sony Vaio VPCEB", 
+                d_uk: "Як правильно зняти мідну теплову трубку, не пошкодивши тендітні чіпи CPU та GPU.", 
+                d_en: "How to properly unfasten copper heatsinks without cracking fragile CPU/GPU silicon dies.", 
+                content_uk: `
+                    <h4>1. Застереження щодо крихкості системи</h4>
+                    <p>У ноутбуках серії Sony Vaio VPCEB мідний радіатор накриває одночасно процесор та відеочіп. Неправильний порядок відкручування викликає перекіс і миттєво сколює кристали!</p>
+
+                    <h4>2. Схема знімання гвинтів (Хрест-нахрест)</h4>
+                    <p>На корпусі радіатора вибито цифри від 1 до 6. Відкручуйте гвинти строго за схемою послаблення по пів-оберту:</p>
+
+                    <pre>Гвинти CPU: [1] [2] [3] [4]
+Гвинти GPU: [5] [6]</pre>
+
+                    <ul>
+                        <li><b>Покроково:</b> спочатку послабте 1 і 4, потім 2 і 3, далі 5 і 6.</li>
+                        <li>Ніколи не викручуйте гвинт повністю за один раз!</li>
+                    </ul>
+
+                    <h4>3. Очищення та знежирення</h4>
+                    <p>Залишки старої засохлої термопасти видаляйте виключно ізопропіловим спиртом (IPA 99%) та ватяними паличками. Не використовуйте металеві предмети чи викрутки!</p>
+                `, 
+                content_en: `
+                    <h4>1. Precautions for Single Heatpipe Assemblies</h4>
+                    <p>Sony Vaio VPCEB models utilize a shared copper heatpipe array covering both the CPU and Discrete GPU. Uneven screw torque causes severe die pressure and instant silicon chipping!</p>
+
+                    <h4>2. Cross-Pattern Loosening Sequence</h4>
+                    <p>Follow the stamped screw numbers (1 through 6) using half-turn incremental increments:</p>
+
+                    <pre>CPU Screws: [1] [2] [3] [4]
+GPU Screws: [5] [6]</pre>
+
+                    <ul>
+                        <li><b>Pattern:</b> Loosen 1 & 4, then 2 & 3, followed by 5 & 6.</li>
+                        <li>Never unscrew a single corner completely in one pass!</li>
+                    </ul>
+
+                    <h4>3. Die Cleaning and Isopropyl Wash</h4>
+                    <p>Remove dried thermal compound using 99% Isopropyl Alcohol (IPA) and lint-free cotton swabs. Avoid scraping bare dies with metal screwdrivers!</p>
+                ` 
+            },
+            { 
+                id: "p6", 
+                tag: "Windows", 
+                t_uk: "Ідеальне налаштування Paging File (файла підкачки) при 4 ГБ ОЗП", 
+                t_en: "Optimal Pagefile Configuration for 4 GB RAM Systems", 
+                d_uk: "Усунення мікрофризів у іграх та виключення фрагментації жорсткого диска HDD.", 
+                d_en: "Eliminating game stutters and preventing HDD disk fragmentation.", 
+                content_uk: `
+                    <h4>1. Чому динамічний розмір підкачки шкодить продуктивності</h4>
+                    <p>За замовчуванням Windows змінює розмір <code>pagefile.sys</code> на льоту. На звичайних HDD це викликає постійне переміщення голівки зчитування, фризи у іграх та катастрофічну фрагментацію накопичувача.</p>
+
+                    <h4>2. Формула розрахунку фіксованого розміру</h4>
+                    <p>При обсязі оперативної пам'яті 4 ГБ встановіть статичний розмір файла підкачки:</p>
+                    <ul>
+                        <li><b>Початковий розмір (MB):</b> 4096</li>
+                        <li><b>Максимальний розмір (MB):</b> 4096</li>
+                    </ul>
+
+                    <h4>3. Твіки реєстру для заборони скидання ядра на диск</h4>
+                    <p>Перейдіть у гілку реєстру <code>HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Memory Management</code> та змініть значення:</p>
+                    <pre>DisablePagingExecutive = 1 (Залишає ядро Win у швидкій ОЗП)
+LargeSystemCache = 0 (Оптимізує дисковий кеш під ігри)</pre>
+                `, 
+                content_en: `
+                    <h4>1. The Dynamic Pagefile Stuttering Issue</h4>
+                    <p>By default, Windows expands and shrinks <code>pagefile.sys</code> dynamically. On HDDs, this causes severe read/write head thrashing, frame drops, and heavy drive fragmentation.</p>
+
+                    <h4>2. Static Allocation Formula for 4GB Systems</h4>
+                    <p>Lock the pagefile size to a 1:1 static memory ratio:</p>
+                    <ul>
+                        <li><b>Initial Size (MB):</b> 4096</li>
+                        <li><b>Maximum Size (MB):</b> 4096</li>
+                    </ul>
+
+                    <h4>3. Registry Tweaks to Keep Kernel in RAM</h4>
+                    <p>Navigate to <code>HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Memory Management</code> and modify key values:</p>
+                    <pre>DisablePagingExecutive = 1 (Prevents Windows kernel from swapping to HDD)
+LargeSystemCache = 0 (Prioritizes application RAM allocation)</pre>
+                ` 
+            },
+            { 
+                id: "p7", 
+                tag: "Windows", 
+                t_uk: "Вимкнення SysMain (SuperFetch) та телеметрії Windows 10", 
+                t_en: "Disabling SysMain (SuperFetch) & Windows 10 Telemetry", 
+                d_uk: "Вирішення проблеми 100% завантаження диска HDD та вивільнення ресурсів CPU.", 
+                d_en: "Fixing 100% HDD disk usage bugs and freeing up background CPU cycles.", 
+                content_uk: `
+                    <h4>1. Причина 100% навантаження HDD у Windows 10</h4>
+                    <p>Служба SysMain (раніше SuperFetch) постійно аналізує запускати софт та завантажує його в оперативку. На повільних дисках 5400 RPM це викликаємертві зависання системи.</p>
+
+                    <h4>2. Команди вимкнення через PowerShell</h4>
+                    <p>Запустіть PowerShell від імені Адміністратора та виконайте:</p>
+                    <pre>Stop-Service -Name "SysMain" -Force
+Set-Service -Name "SysMain" -StartupType Disabled
+
+Stop-Service -Name "DiagTrack" -Force
+Set-Service -Name "DiagTrack" -StartupType Disabled</pre>
+
+                    <h4>3. Вимкнення телеметрії через Реєстр</h4>
+                    <p>Створіть параметри у гілці <code>HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection</code>:</p>
+                    <pre>AllowTelemetry = 0 (DWORD 32-bit)</pre>
+                `, 
+                content_en: `
+                    <h4>1. Root Cause of 100% HDD Disk Usage</h4>
+                    <p>The SysMain service (formerly SuperFetch) constantly preloads applications into memory. On 5400 RPM drives, this results in continuous disk thrashing and total system unresponsiveness.</p>
+
+                    <h4>2. Disabling Services via PowerShell</h4>
+                    <p>Open PowerShell as Administrator and run:</p>
+                    <pre>Stop-Service -Name "SysMain" -Force
+Set-Service -Name "SysMain" -StartupType Disabled
+
+Stop-Service -Name "DiagTrack" -Force
+Set-Service -Name "DiagTrack" -StartupType Disabled</pre>
+
+                    <h4>3. Registry Telemetry Override</h4>
+                    <p>Add DWORD entry under <code>HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection</code>:</p>
+                    <pre>AllowTelemetry = 0 (DWORD 32-bit)</pre>
+                ` 
+            },
+            { 
+                id: "p8", 
+                tag: "Windows", 
+                t_uk: "Глибоке та безпечне очищення хранилища компонентів WinSxS", 
+                t_en: "Deep & Safe WinSxS Component Store Cleanup via DISM", 
+                d_uk: "Як безпечно звільнити від 4 до 10 ГБ пам'яті на системному диску C.", 
+                d_en: "How to safely recover 4 to 10 GB of space on drive C using DISM tool.", 
+                content_uk: `
+                    <h4>1. Що таке папка WinSxS</h4>
+                    <p>Папка <code>C:\\Windows\\WinSxS</code> накопичує старі резервні копії оновлень. З часом вона розростається до 15-20 ГБ. Видаляти її вручну категорично заборонено!</p>
+
+                    <h4>2. Очищення за допомогою DISM tool</h4>
+                    <p>Відкрийте командний рядок від імені адміністратора та виконайте команду аналізу:</p>
+                    <pre>Dism.exe /Online /Cleanup-Image /AnalyzeComponentStore</pre>
+
+                    <p>Якщо система підтверджує доцільність очищення, запустіть видалення застарілих оновлень:</p>
+                    <pre>Dism.exe /Online /Cleanup-Image /StartComponentCleanup /ResetBase</pre>
+
+                    <div class="article-warning-box">
+                        <b>Примітка:</b> Параметр <code>/ResetBase</code> видаляє можливість відкотити раніше встановлені оновлення, але вивільняє максимум дискового простору.
+                    </div>
+                `, 
+                content_en: `
+                    <h4>1. Understanding the WinSxS Folder</h4>
+                    <p>The <code>C:\\Windows\\WinSxS</code> folder stores historical update backup packages. Over time it grows to 15-20 GB. Never delete files inside this folder manually!</p>
+
+                    <h4>2. Executing DISM Cleanup Tool</h4>
+                    <p>Run CMD as administrator and analyze the component store:</p>
+                    <pre>Dism.exe /Online /Cleanup-Image /AnalyzeComponentStore</pre>
+
+                    <p>To purge obsolete update components and shrink the folder size, run:</p>
+                    <pre>Dism.exe /Online /Cleanup-Image /StartComponentCleanup /ResetBase</pre>
+
+                    <div class="article-warning-box">
+                        <b>Note:</b> The <code>/ResetBase</code> switch removes the ability to uninstall past Windows updates, but yields maximum disk space savings.
+                    </div>
+                ` 
+            },
+            { 
+                id: "p9", 
+                tag: "Windows", 
+                t_uk: "Оптимізація алгоритму Нагла (Nagle) для зниження пігу в онлайн-іграх", 
+                t_en: "Disabling Nagle's Algorithm for Lower In-Game Latency", 
+                d_uk: "Налаштування параметрів TCP/IP реєстру для усунення затримок затримування пакетів.", 
+                d_en: "Configuring TCP/IP registry parameters to remove network packet buffering lag.", 
+                content_uk: `
+                    <h4>1. Суть алгоритму Нагла у Windows</h4>
+                    <p>Алгоритм Нагла об'єднує дрібні мережеві пакети в один великий перед відправкою. У звичайному веб-серфінгу це економить трафік, але в іграх (CS, Roblox, Dota) викликає затримку передачі даних на 20-50 мс.</p>
+
+                    <h4>2. Модифікація параметрів реєстру</h4>
+                    <p>Відкрийте <code>regedit</code> та перейдіть у гілку:</p>
+                    <pre>HKLM\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces\\{Ваш_GUID_Мережевої_Карти}</pre>
+
+                    <p>Створіть два параметри <b>DWORD (32-bit)</b> зі значенням <b>1</b>:</p>
+                    <ul>
+                        <li><code>TcpAckFrequency = 1</code> (надсилати підтвердження пакетів негайно)</li>
+                        <li><code>TCPNoDelay = 1</code> (вимкнути буферизацію алгоритму Нагла)</li>
+                    </ul>
+                `, 
+                content_en: `
+                    <h4>1. How Nagle's Algorithm Affects Ping</h4>
+                    <p>Nagle's algorithm buffers small outgoing TCP packets together before transmission. While useful for web browsing, it introduces a 20-50 ms artificial ping delay in online games.</p>
+
+                    <h4>2. Registry TCP/IP Optimization</h4>
+                    <p>Open <code>regedit</code> and navigate to your active network card interface GUID:</p>
+                    <pre>HKLM\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces\\{Your_NIC_GUID}</pre>
+
+                    <p>Create two new <b>DWORD (32-bit)</b> entries and set their values to <b>1</b>:</p>
+                    <ul>
+                        <li><code>TcpAckFrequency = 1</code> (Forces immediate packet ACK response)</li>
+                        <li><code>TCPNoDelay = 1</code> (Disables packet buffering delay entirely)</li>
+                    </ul>
+                ` 
+            },
+            { 
+                id: "p10", 
+                tag: "Windows", 
+                t_uk: "Видалення вбудованого сміття Bloatware з Windows 10", 
+                t_en: "Removing Windows 10 Pre-installed Bloatware via PowerShell", 
+                d_uk: "Повне вирізання UWP додатків, Xbox Live, Погоди та Карт для прискорення ПК.", 
+                d_en: "Complete removal of UWP apps, Xbox Live services, and Cortana to speed up performance.", 
+                content_uk: `
+                    <h4>1. Навіщо видаляти штатні UWP додатки</h4>
+                    <p>Вбудовані додатки Windows 10 (Cortana, Xbox Game Bar, 3D Builder) постійно працюють у фоновому режимі, споживаючи до 600 МБ оперативної пам'яті.</p>
+
+                    <h4>2. Команда для очищення поточного користувача</h4>
+                    <p>Відкрийте PowerShell від імені Адміністратора та виконайте сценарій:</p>
+                    <pre>Get-AppxPackage | Where-Object {!$_.NonRemovable} | Remove-AppxPackage</pre>
+
+                    <h4>3. Видалення конкретних додатків (Приклад Xbox)</h4>
+                    <pre>Get-AppxPackage *xbox* | Remove-AppxPackage</pre>
+                `, 
+                content_en: `
+                    <h4>1. Why Remove Built-in Windows Apps</h4>
+                    <p>Pre-installed UWP applications (Xbox App, Solitaire, Cortana, Feedback Hub) idle in the background, consuming up to 600 MB of RAM on weak systems.</p>
+
+                    <h4>2. Purging All Non-Essential UWP Apps</h4>
+                    <p>Run PowerShell as Administrator and execute the following batch command:</p>
+                    <pre>Get-AppxPackage | Where-Object {!$_.NonRemovable} | Remove-AppxPackage</pre>
+
+                    <h4>3. Targeted App Removal (Example: Xbox Services)</h4>
+                    <pre>Get-AppxPackage *xbox* | Remove-AppxPackage</pre>
+                ` 
+            },
+            { 
+                id: "p11", 
+                tag: "Minecraft", 
+                t_uk: "Максимальний буст FPS у Minecraft: Збірка Fabric + Sodium", 
+                t_en: "Maximum Minecraft FPS Optimization: Fabric + Sodium Stack", 
+                d_uk: "Повна заміна застарілого OptiFine на сучасні моди рендерингу для слабких ПК.", 
+                d_en: "Replacing outdated OptiFine with modern open-source rendering engines.", 
+                content_uk: `
+                    <h4>1. Чому OptiFine застарів</h4>
+                    <p>OptiFine ломає сучасні алгоритми обробки чанків у нових версіях Java. Сучасний стек модів на базі <b>Fabric Engine</b> дає у 2.5 рази більше FPS.</p>
+
+                    <h4>2. Обов'язковий набір модів продуктивності</h4>
+                    <ul>
+                        <li><b>Sodium:</b> повністю переписує движок рендерингу OpenGL.</li>
+                        <li><b>Lithium:</b> оптимізує фізику мобів та прораховування тиків сервера.</li>
+                        <li><b>FerriteCore:</b> зменшує використання оперативної пам'яті Java на 30-40%.</li>
+                        <li><b>Entity Culling:</b> не рендерить мобів та скрині за стінами.</li>
+                    </ul>
+
+                    <h4>3. Аргументи запускa JVM для слабких ПК</h4>
+                    <p>У налаштуваннях лаунчера додайте аргументи очищення сміття Java:</p>
+                    <pre>-XX:+UseG1GC -Xms2048M -Xmx2560M -XX:MaxGCPauseMillis=20</pre>
+                `, 
+                content_en: `
+                    <h4>1. Why OptiFine is Obsolete</h4>
+                    <p>OptiFine's codebase relies on legacy OpenGL execution models. Modern Fabric-based mods rewrite core rendering, delivering up to 250% higher frame rates.</p>
+
+                    <h4>2. Essential Fabric Performance Mod Stack</h4>
+                    <ul>
+                        <li><b>Sodium:</b> Modern replacement for the game's rendering engine.</li>
+                        <li><b>Lithium:</b> Optimizes game physics, chunk loading, and entity logic.</li>
+                        <li><b>FerriteCore:</b> Reduces Java heap memory consumption by 30-40%.</li>
+                        <li><b>Entity Culling:</b> Skips rendering hidden entities behind walls.</li>
+                    </ul>
+
+                    <h4>3. Optimized JVM Launch Arguments</h4>
+                    <p>Paste these garbage collection parameters into your launcher settings:</p>
+                    <pre>-XX:+UseG1GC -Xms2048M -Xmx2560M -XX:MaxGCPauseMillis=20</pre>
+                ` 
+            },
+            { 
+                id: "p12", 
+                tag: "Roblox", 
+                t_uk: "Розблокування FPS та твікінг Roblox клієнта через Bloxstrap", 
+                t_en: "Unlocking Roblox FPS & Customizing Client via Bloxstrap", 
+                d_uk: "Зняття ліміту 60 FPS, приховання туману та налаштування FastFlags для бюджетних ПК.", 
+                d_en: "Removing 60 FPS limit, toggling shadows, and tweaking FastFlags for budget PCs.", 
+                content_uk: `
+                    <h4>1. Що таке Bloxstrap</h4>
+                    <p>Bloxstrap — це відкритий кастомний bootstrapper для Roblox, який дозволяє змінювати внутрішні конфігураційні прапорці (FastFlags) та розблоковувати частоту кадрів.</p>
+
+                    <h4>2. Основні налаштування продуктивності</h4>
+                    <ul>
+                        <li><b>FPS Limit:</b> встановіть 0 або 144 (зняття ліміту у 60 FPS)</li>
+                        <li><b>Rendering API:</b> виберіть Vulkan або Direct3D11 для старих відеокарт ATI/NVIDIA</li>
+                        <li><b>In-Game Fog:</b> вимкніть туман для підвищення дальності огляду</li>
+                    </ul>
+
+                    <h4>3. Ключові FastFlags для підйому FPS</h4>
+                    <p>У розділі FastFlag Editor додайте значення:</p>
+                    <pre>FFlagDebugGraphicsDisableShadows = True (Вимкнення тіней)
+DFIntTextureQualityOverride = 1 (Мінімальна якість текстур)</pre>
+                `, 
+                content_en: `
+                    <h4>1. What is Bloxstrap</h4>
+                    <p>Bloxstrap is an open-source bootstrapper for Roblox that enables FastFlag modifications, custom integrations, and frame rate cap removal.</p>
+
+                    <h4>2. Core Performance Tweaks</h4>
+                    <ul>
+                        <li><b>FPS Limit:</b> Set to 0 (Unlocks uncapped FPS)</li>
+                        <li><b>Rendering API:</b> Switch to Vulkan or Direct3D11 for older GPUs</li>
+                        <li><b>In-Game Fog:</b> Disable atmospheric fog to render distant maps clearly</li>
+                    </ul>
+
+                    <h4>3. Recommended FastFlags for Low-End Systems</h4>
+                    <p>Under FastFlag Editor, configure the following values:</p>
+                    <pre>FFlagDebugGraphicsDisableShadows = True (Disables all shadows)
+DFIntTextureQualityOverride = 1 (Forces low VRAM texture quality)</pre>
+                ` 
+            }
+        ];
+
+        let currentLocale = localStorage.getItem('locale') || 'uk';
+        let activeTagFilter = 'all';
+        let currentTab = 'about';
+
+        function initApp() {
+            setLocale(currentLocale, false);
+            
+            const yearEl = document.getElementById('current-year');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+            renderPosts();
+            switchTab('about');
+            
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+
+            handleScroll();
+
+            window.addEventListener('resize', () => updateIndicators(currentTab));
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        function toggleLocale() {
+            currentLocale = currentLocale === 'uk' ? 'en' : 'uk';
+            setLocale(currentLocale, true);
+        }
+
+        function setLocale(locale, save) {
+            currentLocale = locale;
+            if (save) localStorage.setItem('locale', locale);
+
+            const label = document.getElementById('locale-label');
+            if (label) label.textContent = locale.toUpperCase();
+
+            document.documentElement.setAttribute('lang', locale);
+
+            // Update all elements with data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[locale] && translations[locale][key]) {
+                    el.innerHTML = translations[locale][key];
+                }
+            });
+
+            // Update placeholder
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput && translations[locale]["hero.searchPlaceholder"]) {
+                searchInput.placeholder = translations[locale]["hero.searchPlaceholder"];
+            }
+
+            renderPosts();
+            setTimeout(() => updateIndicators(currentTab), 50);
+        }
+
+        function updateIndicators(tabId) {
+            // Update Mobile Indicator Position
+            const mobileBtn = document.getElementById(`mobile-nav-${tabId}`);
+            const mobileIndicator = document.getElementById('mobile-nav-indicator');
+            const mobileContainer = document.getElementById('mobile-nav-container');
+
+            if (mobileBtn && mobileIndicator && mobileContainer) {
+                const containerRect = mobileContainer.getBoundingClientRect();
+                const btnRect = mobileBtn.getBoundingClientRect();
+
+                mobileIndicator.style.width = `${btnRect.width}px`;
+                mobileIndicator.style.height = `${btnRect.height}px`;
+                mobileIndicator.style.left = `${btnRect.left - containerRect.left}px`;
+                mobileIndicator.style.top = `${btnRect.top - containerRect.top}px`;
+                mobileIndicator.style.opacity = '1';
+            }
+
+            // Update Desktop Indicator Position
+            const desktopBtn = document.getElementById(`nav-${tabId}`);
+            const desktopIndicator = document.getElementById('desktop-nav-indicator');
+
+            if (desktopBtn && desktopIndicator && desktopBtn.offsetParent) {
+                desktopIndicator.style.width = `${desktopBtn.offsetWidth}px`;
+                desktopIndicator.style.height = `${desktopBtn.offsetHeight}px`;
+                desktopIndicator.style.left = `${desktopBtn.offsetLeft}px`;
+                desktopIndicator.style.top = `${desktopBtn.offsetTop}px`;
+                desktopIndicator.style.opacity = '1';
+            }
+        }
+
+        function switchTab(tabId) {
+            currentTab = tabId;
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // Remove active style from desktop nav
+            document.querySelectorAll('.tab-nav-btn').forEach(btn => {
+                btn.classList.remove('nav-btn-active');
+            });
+
+            // Reset mobile nav active states
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                btn.classList.remove('nav-btn-active');
+                btn.classList.add('text-zinc-500', 'dark:text-zinc-400');
+            });
+
+            const targetTab = document.getElementById(`tab-${tabId}`);
+            if (targetTab) targetTab.classList.remove('hidden');
+
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.add('nav-btn-active');
+            }
+
+            const activeMobileBtn = document.getElementById(`mobile-nav-${tabId}`);
+            if (activeMobileBtn) {
+                activeMobileBtn.classList.add('nav-btn-active');
+                activeMobileBtn.classList.remove('text-zinc-500', 'dark:text-zinc-400');
+            }
+
+            // Slide glass indicators smoothly
+            updateIndicators(tabId);
+
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
+        function getTagClass(tag) {
+            switch(tag) {
+                case 'Windows': return 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 border-blue-200 dark:border-blue-800/40';
+                case 'Hardware': return 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/60 border-red-200 dark:border-red-800/40';
+                case 'Sony': return 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 border-amber-200 dark:border-amber-800/40';
+                case 'Minecraft': return 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 border-emerald-200 dark:border-emerald-800/40';
+                case 'Roblox': return 'text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/60 border-purple-200 dark:border-purple-800/40';
+                default: return 'text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/60 border-cyan-200 dark:border-cyan-800/40';
+            }
+        }
+
+        function renderPosts() {
+            const grid = document.getElementById('guides-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            const searchInput = document.getElementById('searchInput');
+            const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+            let filtered = fullDetailedArticles.filter(p => {
+                const matchesTag = activeTagFilter === 'all' || p.tag.toLowerCase() === activeTagFilter.toLowerCase();
+                const title = currentLocale === 'en' ? p.t_en : p.t_uk;
+                const desc = currentLocale === 'en' ? p.d_en : p.d_uk;
+
+                const matchesSearch = title.toLowerCase().includes(query) || 
+                                      desc.toLowerCase().includes(query) || 
+                                      p.tag.toLowerCase().includes(query);
+                return matchesTag && matchesSearch;
+            });
+
+            const countEl = document.getElementById('guides-count');
+            if (countEl) {
+                const prefix = translations[currentLocale]["guides.countPrefix"] || "Постів: ";
+                countEl.textContent = `${prefix}${filtered.length}`;
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center text-zinc-500 text-xs py-12">${currentLocale === 'en' ? 'No guides found matching your query 😔' : 'Нічого не знайдено за вашим запитом 😔'}</div>`;
+                return;
+            }
+
+            filtered.forEach(post => {
+                const card = document.createElement('div');
+                card.className = "post-card bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 p-5 hover:border-cyan-500/50 dark:hover:border-cyan-500/50 transition-all flex flex-col justify-between hover:shadow-lg hover:-translate-y-1";
+                const tagClass = getTagClass(post.tag);
+                const title = currentLocale === 'en' ? post.t_en : post.t_uk;
+                const desc = currentLocale === 'en' ? post.d_en : post.d_uk;
+                const readBtnText = translations[currentLocale]["guides.readMore"] || "Читати повністю";
+
+                card.innerHTML = `
+                    <div class="space-y-3">
+                        <span class="text-[10px] font-bold px-2.5 py-1 rounded-full border ${tagClass}">${post.tag}</span>
+                        <h3 class="font-extrabold text-sm text-zinc-900 dark:text-white leading-snug">${title}</h3>
+                        <p class="text-zinc-600 dark:text-zinc-400 text-xs leading-relaxed">${desc}</p>
+                    </div>
+                    <button onclick="openModal('${post.id}')" class="mt-5 text-xs text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 font-bold text-left flex items-center gap-1.5 cursor-pointer group">
+                        <span>${readBtnText}</span>
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
+        function filterByTag(tag, btnElement) {
+            activeTagFilter = tag;
+            document.querySelectorAll('#tag-filters .tag-btn').forEach(btn => {
+                btn.className = "tag-btn bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 px-3.5 py-1.5 rounded-full border border-zinc-200 dark:border-zinc-800 text-xs";
+            });
+            if (btnElement) {
+                btnElement.className = "tag-btn bg-cyan-500 text-zinc-950 px-3.5 py-1.5 rounded-full font-bold shadow-sm text-xs";
+            }
+            renderPosts();
+        }
+
+        function filterPosts() {
+            switchTab('guides');
+            renderPosts();
+        }
+
+        function openModal(id) {
+            const post = fullDetailedArticles.find(p => p.id === id);
+            if (!post) return;
+
+            const tagClass = getTagClass(post.tag);
+            const title = currentLocale === 'en' ? post.t_en : post.t_uk;
+            const content = currentLocale === 'en' ? post.content_en : post.content_uk;
+
+            document.getElementById('modalContent').innerHTML = `
+                <div class="mb-3">
+                    <span class="text-[10px] font-bold px-2.5 py-1 rounded-full border ${tagClass}">${post.tag}</span>
+                </div>
+                <h3 class="text-xl font-black text-zinc-900 dark:text-white mb-4 leading-snug">${title}</h3>
+                <div class="border-t border-zinc-200 dark:border-zinc-800 pt-4 text-zinc-700 dark:text-zinc-300 text-xs sm:text-sm leading-relaxed space-y-3">
+                    ${content}
+                </div>
+            `;
+            document.getElementById('postModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('postModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function closeModalOnBg(e) {
+            if (e.target.id === 'postModal') closeModal();
+        }
+
+        function handleScroll() {
+            const navbar = document.getElementById('navbar');
+            if (!navbar) return;
+            if (window.scrollY > 30) {
+                navbar.classList.add('shadow-xl', 'py-2.5');
+                navbar.classList.remove('py-3');
+            } else {
+                navbar.classList.remove('shadow-xl', 'py-2.5');
+                navbar.classList.add('py-3');
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
